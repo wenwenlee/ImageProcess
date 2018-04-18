@@ -1,0 +1,2 @@
+GammaCorrection
+伽玛校正，可用于调节图像的亮度
