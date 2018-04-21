@@ -1,9 +1,9 @@
 #include"histequal.h"
 
-#define colvl 255
+#define colvl 256
 Mat ycMatchHist(cv::Mat src, cv::Mat dstImg)
 {
-	// ****** Èç¹ûÊÇ RGB Í¼Æ¬Ôò×ªÎª»Ò¶ÈÍ¼Æ¬²Ù×÷ ******  
+	// ****** å¦‚æœæ˜¯ RGB å›¾ç‰‡åˆ™è½¬ä¸ºç°åº¦å›¾ç‰‡æ“ä½œ ******  
 	Mat out(src);
 	Mat srcImg;
 	if(src.channels() == 3)
@@ -27,7 +27,7 @@ Mat ycMatchHist(cv::Mat src, cv::Mat dstImg)
 	float dstCdfArr[colvl] = { 0.f };
 	float tmp;
 
-	// *** Çó½âÔ´Í¼Æ¬µÄÀÛ»ıÖ±·½Í¼£¨¸ÅÂÊ£©·Ö²¼ ***   
+	// *** æ±‚è§£æºå›¾ç‰‡çš„ç´¯ç§¯ç›´æ–¹å›¾ï¼ˆæ¦‚ç‡ï¼‰åˆ†å¸ƒ ***   
 	memset(grayArr, 0, sizeof(grayArr));//grayArr ={0}
 	for (size_t nrow = 0; nrow < srcRow; nrow++)
 		for (size_t ncol = 0; ncol < srcCol; ncol++)
@@ -44,7 +44,7 @@ Mat ycMatchHist(cv::Mat src, cv::Mat dstImg)
 		// std::cout<<srcCdfArr[i]<<std::endl;  
 	}
 
-	// *** Çó½âÄ¿±êÍ¼Æ¬µÄÀÛ»ıÖ±·½Í¼£¨¸ÅÂÊ£©·Ö²¼ ***   
+	// *** æ±‚è§£ç›®æ ‡å›¾ç‰‡çš„ç´¯ç§¯ç›´æ–¹å›¾ï¼ˆæ¦‚ç‡ï¼‰åˆ†å¸ƒ ***   
 	memset(grayArr, 0, sizeof(grayArr));
 	for (size_t nrow = 0; nrow < dstRow; nrow++)
 		for (size_t ncol = 0; ncol < dstCol; ncol++)
@@ -60,7 +60,7 @@ Mat ycMatchHist(cv::Mat src, cv::Mat dstImg)
 		dstCdfArr[i] = tmp / (dstRow * dstCol);
 	}
 
-	// *** Ö±·½Í¼Æ¥ÅäËã·¨ ***  
+	// *** ç›´æ–¹å›¾åŒ¹é…ç®—æ³• ***  
 	int histMap[colvl];
 	int minTag;
 	for (int i = 0; i<colvl; i++)
