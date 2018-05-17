@@ -36,6 +36,9 @@ int Load_Img(Mat& src,const char* WinName)
 	return 1;
 }
 
+
+
+
 void ProceeImage(const Mat& src, Mat& dst)
 {
 	Mat med, thresholdImg;
@@ -47,9 +50,10 @@ void ProceeImage(const Mat& src, Mat& dst)
 	int max_value = 255;
 	int blockSize = 5;
 	int constValue = 5;
+	double threshValue = 125;
 	/*adaptiveThreshold(med, threshold, max_value, 
 		CV_ADAPTIVE_THRESH_MEAN_C, CV_THRESH_BINARY_INV, blockSize, constValue);*/
-	threshold(med, thresholdImg, 125, max_value, THRESH_BINARY);
+	threshold(med, thresholdImg, threshValue, max_value, THRESH_BINARY);
 
 	/*threshold(med, threshold, 0, 126, THRESH_BINARY);*/
 	dst = thresholdImg;
@@ -65,12 +69,30 @@ int main(int argc, char** argv)
 	Mat Processed_standard, Processed_Dected,dst;
 
 	Load_Img(Standard_image, argv[1]);
-	ProceeImage(Standard_image, Processed_standard);
+	/*ProceeImage(Standard_image, Processed_standard);*/
 	Load_Img(Dected_image, argv[2]);
-	ProceeImage(Dected_image, Processed_Dected);
+	/*ProceeImage(Dected_image, Processed_Dected);*/
+	
+	int ksize = 3;
+	double threshValue = 125;
+	ProcessImg process;
+	
+	process.setInput(Standard_image);
+	process.filterImg(ksize);
+	process.thredImg(threshValue);
+	process.getOutput(Processed_standard);
+
+	ProcessImg process2;
+	process2.setInput(Dected_image);
+	process2.filterImg(ksize);
+	process2.thredImg(threshValue);
+	process2.getOutput(Processed_Dected);
 
 
 	imshow("Processed_standard", Processed_standard);
+	waitKey(0);
+
+	imshow("Processed_Dected", Processed_Dected);
 	waitKey(0);
 	//Mat element = getStructuringElement(MORPH_RECT, Size(1, 3)); //getStructuringElement函数返回的是指定形状和尺寸的结构元素
 	//Mat Erode,Dilate;
